@@ -1,1 +1,1 @@
-# django-board
+# Django board practice
