@@ -1,6 +1,6 @@
 from django.db import models
-from model_utils.fields import StatusField
-from model_utils import Choices
+#from model_utils.fields import StatusField
+#from model_utils import Choices
 
 # Create your models here.
 
@@ -12,7 +12,6 @@ class board (models.Model):
 
 #class status (models.Model):
 
-#createsuperuser
 
 '''
 model {
