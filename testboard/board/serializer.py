@@ -4,4 +4,5 @@ from rest_framework import serializers
 class BoardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = board
-        fields = ('draft','published')
+        #fields = ('draft','published')
+        fields = ['title', 'contents', 'created', 'modified']
