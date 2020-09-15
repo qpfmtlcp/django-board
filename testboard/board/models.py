@@ -6,9 +6,19 @@ from django.db import models
 
 class board (models.Model):
     title = models.CharField(max_length = 50)
-    contents = models.CharField(max_length = 200) 
-    created = models.DateTimeField()
+    #modify: contents charfield > textfield로 변경
+    contents = models.TextField() 
+    created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField() 
+    #to-do: 선택형 model 완성
+    #status = models.CharField(choices=STATUS_CHOICES, default = published)
+
+    #to-do: Meta클래스 찾아보기
+    class Meta:
+        ordering = ['created']
+    
+
+
 #django에서도 timestamp를 지원하지만 model util을 쓰면 좀더 편하게 사용이 가능하다.
 # 링크된 문서 참고
 #class status (models.Model):
