@@ -40,13 +40,6 @@ INSTALLED_APPS = [
     'board',
     'rest_framework',
 ]
-#추가 - restframework 설정, page size - 10
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAdminUser',
-    ],
-    'PAGE_SIZE': 10
-}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,7 +52,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'testboard.urls'
 
-#추후 설정 필요
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
