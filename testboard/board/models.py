@@ -1,10 +1,12 @@
 from django.db import models
+from model_utils.models import StatusModel, TimeStampedModel
+from model_utils.fields import StatusField
+from model_utils import Choices
 
-class board (models.Model):
+class board (TimeStampedModel):
+    STATUS = Choices('draft', 'published')
     title = models.CharField(max_length = 50)
     contents = models.TextField() 
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField() 
 
     class Meta:
         ordering = ['created']

@@ -27,4 +27,4 @@ class BoardView(generics.ListCreateAPIView):
     
 class BoardDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = board.objects.all()
-    serializer_class = BoardSerializer  
+    serializer_class = BoardSerializer
