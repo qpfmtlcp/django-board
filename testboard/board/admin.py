@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Board, User
 
 class BoardAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'contents', 'created','modified',)
+    list_display = ('title', 'status', 'contents', 'created', 'modified','owner')
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username',)

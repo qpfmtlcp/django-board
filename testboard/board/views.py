@@ -7,7 +7,12 @@ from .models import Board, User
 class BoardFilter(filters.FilterSet):
     class Meta:
         model = Board
-        fields = ['status']
+        fields = ['status',]
+
+class UserFilter(filters.FilterSet):
+    class Meta:
+        model = User
+        fields = ['username']
         
 class BoardView(generics.ListCreateAPIView):
     queryset = Board.objects.all()
@@ -21,6 +26,7 @@ class BoardDetailView(generics.RetrieveUpdateDestroyAPIView):
 class UserView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filterset_class = UserFilter
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
