@@ -7,7 +7,7 @@ from .models import Board, User
 class BoardFilter(filters.FilterSet):
     class Meta:
         model = Board
-        fields = ['status',]
+        fields = ['status','owner',]
 
 class UserFilter(filters.FilterSet):
     class Meta:
