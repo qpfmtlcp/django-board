@@ -2,9 +2,16 @@ from .models import Board, User, History
 from rest_framework import serializers
 
 
+class HistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = History
+        fields = ['board', 'created']
+
+
 class BoardSerializer(serializers.ModelSerializer):
     owner = serializers.StringRelatedField()
-    history = serializers.StringRelatedField(many=True)
+    history = HistorySerializer(many=True, read_only=True)
+    user = serializers.CharField(max_length=30, write_only=True)
 
     class Meta:
         model = Board
@@ -16,22 +23,11 @@ class BoardSerializer(serializers.ModelSerializer):
             'modified',
             'owner',
             'history',
+            'user',
         ]
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # title =  serializers.StringRelatedField(many=True)
     class Meta:
         model = User
         fields = ['username']
-
-
-class HistorySerializer(serializers.ModelSerializer):
-    currentUser = serializers.StringRelatedField()
-    modifiedDate = serializers.SlugRelatedField(
-        many=False, read_only=True, slug_field='modified'
-    )
-
-    class Meta:
-        model = History
-        fields = ['currentUser', 'modifiedDate']

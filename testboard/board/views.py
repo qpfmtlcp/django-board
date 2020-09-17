@@ -1,6 +1,8 @@
 from rest_framework import generics
-from .serializer import BoardSerializer, UserSerializer, HistorySerializer
+
 from django_filters import rest_framework as filters
+
+from .serializer import BoardSerializer, UserSerializer, HistorySerializer
 from .models import Board, User, History
 
 
@@ -41,11 +43,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-class HistoryView(generics.ListCreateAPIView):
-    queryset = History.objects.all()
-    serializer_class = HistorySerializer
+class HistoryView(generics.ListAPIView):
 
-
-class HistoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = History.objects.all()
     serializer_class = HistorySerializer

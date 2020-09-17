@@ -1,14 +1,18 @@
 from django.contrib import admin
 from .models import Board, User, History
 
+
 class BoardAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'contents', 'created', 'modified','owner')
+    list_display = ('id', 'title', 'status', 'contents', 'created', 'modified', 'owner')
+
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username',)
-    
+
+
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('currentUser','modifiedDate')
+    list_display = ('board', 'created')
+
 
 admin.site.register(Board, BoardAdmin)
 admin.site.register(User, UserAdmin)
