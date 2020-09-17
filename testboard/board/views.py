@@ -31,8 +31,12 @@ class UserView(generics.ListCreateAPIView):
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
-class HistoryView(generics.RetrieveAPIView):
+
+class HistoryView(generics.ListCreateAPIView):
+    queryset = History.objects.all()
+    serializer_class = HistorySerializer
+
+class HistoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
     

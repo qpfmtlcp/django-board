@@ -6,5 +6,6 @@ urlpatterns = [
     path('board/<int:pk>/', views.BoardDetailView.as_view()),
     path('user/', views.UserView.as_view()),
     path('user/<int:pk/', views.UserDetailView.as_view()),
-    path('history/<int:pk>/', views.HistoryView.as_view()),
+    path('history/', views.HistoryView.as_view()),
+    path('history/<int:pk>/', views.HistoryDetailView.as_view()),
 ]

@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 class BoardSerializer(serializers.ModelSerializer):
     owner = serializers.StringRelatedField()
-    history = serializers.StringRelatedField()
+    history = serializers.StringRelatedField(many=True)
     class Meta:
         model = Board
         fields = ['title', 'status', 'contents', 'created', 'modified', 'owner','history']
@@ -24,4 +24,3 @@ class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = History
         fields = ['currentUser','modifiedDate']
-        

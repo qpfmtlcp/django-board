@@ -12,9 +12,11 @@ class Board (TimeStampedModel, StatusModel):
     title = models.CharField(max_length = 50)
     contents = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return '%s' % (self.modified)
 
 class History(models.Model):
-    modifiedDate = models.ForeignKey(Board, on_delete=models.CASCADE)
+    modifiedDate = models.ForeignKey(Board, related_name='history', on_delete=models.CASCADE)
     currentUser = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return '%s: %s' % (self.currentUser, self.modifiedDate)
