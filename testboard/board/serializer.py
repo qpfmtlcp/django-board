@@ -30,11 +30,10 @@ class BoardSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         username = validated_data.pop("user")
-        currentUser = User.objects.all()
-        for name in currentUser:
-            if name.username == username:
-                print(name.id)
-                History.objects.create(user=currentUser)
+        checkUser = User.objects.filter(username=username)
+        if checkUser.exists():
+            currentUser = User.objects.get(username=username)
+            History.objects.create(user=currentUser)
         return instance
 
 

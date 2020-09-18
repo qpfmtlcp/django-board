@@ -11,7 +11,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('board', 'created')
+    list_display = ('user', 'created')
 
 
 admin.site.register(Board, BoardAdmin)
