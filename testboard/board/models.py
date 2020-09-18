@@ -19,5 +19,10 @@ class Board(TimeStampedModel, StatusModel):
 
 
 class History(TimeStampedModel):
-    board = models.ForeignKey(Board, related_name='history', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    board = models.ForeignKey(
+        Board,
+        related_name='history',
+        on_delete=models.CASCADE,
+        null=False,
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

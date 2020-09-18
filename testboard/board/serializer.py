@@ -3,13 +3,14 @@ from rest_framework import serializers
 
 
 class HistorySerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+
     class Meta:
         model = History
-        fields = ['board', 'created']
+        fields = ['user', 'created']
 
 
 class BoardSerializer(serializers.ModelSerializer):
-    owner = serializers.StringRelatedField()
     history = HistorySerializer(many=True, read_only=True)
     user = serializers.CharField(max_length=30, write_only=True)
 
@@ -21,10 +22,18 @@ class BoardSerializer(serializers.ModelSerializer):
             'contents',
             'created',
             'modified',
-            'owner',
             'history',
             'user',
         ]
+
+    def update(self, instance, validated_data):
+        username = validated_data.pop("user")
+        checkUser = User.objects.filter(username=username)
+        if checkUser.exists():
+            currentUser = User.objects.get(username=username)
+            History.objects.create(board=instance, user=currentUser)
+        instance.save()
+        return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
