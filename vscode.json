@@ -1,9 +1,0 @@
-{
-  "editor.formatOnSave": true,
-  "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--skip-string-normalization"],
-  "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true,
-  "python.linting.lintOnSave": true,
-  "python.linting.pylintArgs": []
-}
