@@ -11,7 +11,6 @@ class HistorySerializer(serializers.ModelSerializer):
 
 
 class BoardSerializer(serializers.ModelSerializer):
-    owner = serializers.StringRelatedField()
     history = HistorySerializer(many=True, read_only=True)
     user = serializers.CharField(max_length=30, write_only=True)
 
@@ -23,7 +22,6 @@ class BoardSerializer(serializers.ModelSerializer):
             'contents',
             'created',
             'modified',
-            'owner',
             'history',
             'user',
         ]
@@ -33,7 +31,8 @@ class BoardSerializer(serializers.ModelSerializer):
         checkUser = User.objects.filter(username=username)
         if checkUser.exists():
             currentUser = User.objects.get(username=username)
-            History.objects.create(user=currentUser)
+            History.objects.create(board=instance, user=currentUser)
+        instance.save()
         return instance
 
 

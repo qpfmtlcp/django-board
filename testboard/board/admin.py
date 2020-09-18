@@ -3,7 +3,7 @@ from .models import Board, User, History
 
 
 class BoardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'status', 'contents', 'created', 'modified', 'owner')
+    list_display = ('id', 'title', 'status', 'contents', 'owner')
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -11,7 +11,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ('user', 'created')
+    list_display = ('id', 'user', 'created')
 
 
 admin.site.register(Board, BoardAdmin)
