@@ -13,6 +13,8 @@ class HistorySerializer(serializers.ModelSerializer):
 class BoardSerializer(serializers.ModelSerializer):
     history = HistorySerializer(many=True, read_only=True)
     user = serializers.CharField(max_length=30, write_only=True)
+    title = serializers.CharField(max_length=50)
+    contents = serializers.CharField(max_length=50)
 
     class Meta:
         model = Board
@@ -32,6 +34,8 @@ class BoardSerializer(serializers.ModelSerializer):
         if checkUser.exists():
             currentUser = User.objects.get(username=username)
             History.objects.create(board=instance, user=currentUser)
+        instance.title = validated_data.pop("title")
+        instance.contents = validated_data.pop("contents")
         instance.save()
         return instance
 
