@@ -44,6 +44,5 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class HistoryView(generics.ListAPIView):
-
     queryset = History.objects.all()
     serializer_class = HistorySerializer
