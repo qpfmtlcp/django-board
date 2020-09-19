@@ -44,8 +44,14 @@ class BoardSerializer(serializers.ModelSerializer):
             currentUser = User.objects.get(username=username)
             History.objects.create(board=instance, user=currentUser)
 
-        instance.title = validated_data.pop("title")
-        instance.contents = validated_data.pop("contents")
+        title = validated_data.pop("title")
+        contents = validated_data.pop("contents")
+        if title:
+            instance.title = title
+
+        if contents:
+            instance.contents = contents
+
         instance.save()
         return instance
 
