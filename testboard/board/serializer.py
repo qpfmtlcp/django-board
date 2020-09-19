@@ -1,5 +1,6 @@
 from .models import Board, User, History
 from rest_framework import serializers
+from django.core.exceptions import ValidationError
 
 
 class HistorySerializer(serializers.ModelSerializer):
@@ -33,6 +34,8 @@ class BoardSerializer(serializers.ModelSerializer):
         checkUser = User.objects.filter(username=user)
         if checkUser.exists():
             owner = User.objects.get(username=user)
+        else:
+            raise serializers.ValidationError('user name is not exist.')
 
         board = Board.objects.create(owner=owner, **validated_data)
         return board
@@ -43,6 +46,8 @@ class BoardSerializer(serializers.ModelSerializer):
         if checkUser.exists():
             currentUser = User.objects.get(username=username)
             History.objects.create(board=instance, user=currentUser)
+        else:
+            raise serializers.ValidationError('user name is not exist.')
 
         title = validated_data.pop("title")
         contents = validated_data.pop("contents")
