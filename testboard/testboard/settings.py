@@ -122,5 +122,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-#추후 설정 필요
+# 추후 설정 필요
 STATIC_URL = '/static/'

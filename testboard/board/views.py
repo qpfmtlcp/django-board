@@ -5,10 +5,9 @@ from django_filters import rest_framework as filters
 from .serializer import (
     BoardSerializer,
     BoardCreateSerializer,
-    UserSerializer,
     HistorySerializer,
 )
-from .models import Board, User, History
+from .models import Board, History
 
 
 class BoardFilter(filters.FilterSet):
@@ -20,10 +19,11 @@ class BoardFilter(filters.FilterSet):
         ]
 
 
+'''
 class UserFilter(filters.FilterSet):
     class Meta:
         model = User
-        fields = ['username']
+        fields = ['username']'''
 
 
 class BoardView(generics.ListCreateAPIView):
@@ -35,17 +35,6 @@ class BoardView(generics.ListCreateAPIView):
 class BoardDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
-
-
-class UserView(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    filterset_class = UserFilter
-
-
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 
 class HistoryView(generics.ListAPIView):
