@@ -11,8 +11,7 @@ class HistorySerializer(serializers.ModelSerializer):
         fields = ['user', 'created']
 
 
-class BoardSerializer(serializers.ModelSerializer):
-    history = HistorySerializer(many=True, read_only=True)
+class BoardCreateSerializer(serializers.ModelSerializer):
     user = serializers.CharField(max_length=30, write_only=True)
     title = serializers.CharField(max_length=50, required=False)
     contents = serializers.CharField(max_length=50, required=False)
@@ -20,12 +19,9 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = [
+            'id',
             'title',
-            'status',
             'contents',
-            'created',
-            'modified',
-            'history',
             'user',
         ]
 
@@ -47,6 +43,27 @@ class BoardSerializer(serializers.ModelSerializer):
 
         return Board.objects.create(owner=owner, **validated_data)
 
+
+class BoardSerializer(serializers.ModelSerializer):
+    history = HistorySerializer(many=True, read_only=True)
+    user = serializers.CharField(max_length=30, write_only=True)
+    title = serializers.CharField(max_length=50, required=False)
+    contents = serializers.CharField(max_length=50, required=False)
+    STATUS = ('draft', 'published')
+    status = serializers.ChoiceField(STATUS)
+
+    class Meta:
+        model = Board
+        fields = [
+            'title',
+            'status',
+            'contents',
+            'created',
+            'modified',
+            'history',
+            'user',
+        ]
+
     def update(self, instance, validated_data):
         username = validated_data.pop("user")
         if User.objects.filter(username=username).exists() == True:
@@ -56,6 +73,7 @@ class BoardSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError('user name is not exist.')
 
+        instance.status = validated_data.get('status', instance.status)
         instance.title = validated_data.get('title', instance.title)
         instance.contents = validated_data.get('contents', instance.contents)
         instance.save()

@@ -2,7 +2,12 @@ from rest_framework import generics
 
 from django_filters import rest_framework as filters
 
-from .serializer import BoardSerializer, UserSerializer, HistorySerializer
+from .serializer import (
+    BoardSerializer,
+    BoardCreateSerializer,
+    UserSerializer,
+    HistorySerializer,
+)
 from .models import Board, User, History
 
 
@@ -23,7 +28,7 @@ class UserFilter(filters.FilterSet):
 
 class BoardView(generics.ListCreateAPIView):
     queryset = Board.objects.all()
-    serializer_class = BoardSerializer
+    serializer_class = BoardCreateSerializer
     filterset_class = BoardFilter
 
 
