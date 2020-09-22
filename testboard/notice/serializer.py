@@ -8,4 +8,4 @@ from .models import NoticeBoard
 class NoticeBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = NoticeBoard
-        fields = ['contents', 'created']
+        fields = ['id', 'contents', 'created']

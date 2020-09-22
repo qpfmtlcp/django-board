@@ -12,23 +12,16 @@ from .serializer import NoticeBoardSerializer
 from .models import NoticeBoard
 
 
-class ReadOnly(BasePermission):
-    def has_permission(self, request, view):
-        return request.method in SAFE_METHODS
-
-
 class NoticeBoardView(generics.ListCreateAPIView):
     queryset = NoticeBoard.objects.all()
     serializer_class = NoticeBoardSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly | ReadOnly | IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly | IsAdminUser]
 
     def perform_create(self, serializer):
-        # return super().perform_create(serializer)
         serializer.save(owner=self.request.user)
-        # request.user == django.user
 
 
 class NoticeBoardDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = NoticeBoard.objects.all()
     serializer_class = NoticeBoardSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
