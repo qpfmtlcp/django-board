@@ -17,12 +17,15 @@ class NoticeBoard(TimeStampedModel, StatusModel):
     )
     tag_set = models.ManyToManyField('Tag', blank=True)
 
+    def __str__(self):
+        return self.contents
+
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    tagname = models.CharField(max_length=100, unique=True)
     # unique는 해당 필드가 테이블에서 유니크하게 저장됨. 중복되는 값이 있으면 오류 발생
     def __str__(self):
-        return self.name
+        return "#" + self.tagname
 
 
 # 태그를 링크처리. Charfiled로 받고 링크를 클릭하면 해당 링크가 포함된 post list 검색결과 나와야 함.
