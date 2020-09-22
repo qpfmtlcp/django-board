@@ -18,15 +18,6 @@ class NoticeBoard(TimeStampedModel, StatusModel):
 
     title = models.CharField(max_length=50)
     contents = models.TextField()
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-
-
-'''
-class History(TimeStampedModel):
-    board = models.ForeignKey(
-        Board,
-        related_name='history',
-        on_delete=models.CASCADE,
-        null=False,
+    owner = models.ForeignKey(
+        'auth.User', related_name='snippets', on_delete=models.CASCADE
     )
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)'''
