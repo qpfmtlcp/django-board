@@ -29,4 +29,4 @@ class NoticeBoardSerializer(serializers.ModelSerializer):
 class TagListRelatedBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = TagListRelatedBoard
-        fields = ['id']
+        fields = ['id', 'notice', 'tag']
