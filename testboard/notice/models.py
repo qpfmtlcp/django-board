@@ -33,6 +33,9 @@ class TagListRelatedBoard(TimeStampedModel):
     notice = models.ForeignKey(NoticeBoard, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = [['notice', 'tag']]
+
 
 # 태그를 링크처리. Charfiled로 받고 링크를 클릭하면 해당 링크가 포함된 post list 검색결과 나와야 함.
 # custom template filter를 사용하고 many to many 를 활용해얗됨.

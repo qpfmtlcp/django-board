@@ -6,4 +6,5 @@ urlpatterns = [
     path('noticeboard/', views.NoticeBoardView.as_view()),
     path('noticeboard/<int:pk>/', views.NoticeBoardDetailView.as_view()),
     path('tag/', views.TagView.as_view()),
+    path('tagList/', views.TagListRelatedBoardView.as_view()),
 ]

@@ -2,13 +2,11 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 from rest_framework import serializers
-from .models import NoticeBoard, Tag
+from .models import NoticeBoard, Tag, TagListRelatedBoard
 
 
 class TagSerializer(serializers.ModelSerializer):
-    tagname = serializers.StringRelatedField(
-        # many=True, read_only=True, slug_field="tagname"
-    )
+    tagname = serializers.StringRelatedField()
 
     class Meta:
         model = Tag
@@ -16,7 +14,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class NoticeBoardSerializer(serializers.ModelSerializer):
-    tag = TagSerializer(required=False)
+    tag = TagSerializer(required=False, read_only=True)
     title = serializers.CharField(max_length=50)
     contents = serializers.CharField(max_length=50)
 
@@ -25,9 +23,10 @@ class NoticeBoardSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'contents', 'created', 'tag']
 
     def create(self, validated_data):
-        # tagname = validated_data.get("tag")
-        # print(tagname)
-        # tag = Tag()
-        # tag.save()
-        # tag.objects.create(tagname=tagname)
         return NoticeBoard.objects.create(**validated_data)
+
+
+class TagListRelatedBoardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TagListRelatedBoard
+        fields = ['id']
