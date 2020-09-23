@@ -23,10 +23,15 @@ class NoticeBoard(TimeStampedModel, StatusModel):
     owner = models.ForeignKey(
         'auth.User', related_name='snippets', on_delete=models.CASCADE
     )
-    tag = models.ManyToManyField(Tag, blank=True)
+    tag = models.ManyToManyField(Tag, through="TagListRelatedBoard")
 
     def __str__(self):
-        return self.contents
+        return self.title
+
+
+class TagListRelatedBoard(TimeStampedModel):
+    notice = models.ForeignKey(NoticeBoard, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
 
 # 태그를 링크처리. Charfiled로 받고 링크를 클릭하면 해당 링크가 포함된 post list 검색결과 나와야 함.
