@@ -8,8 +8,8 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from django_filters import rest_framework as filters
-from .serializer import NoticeBoardSerializer
-from .models import NoticeBoard
+from .serializer import NoticeBoardSerializer, TagSerializer
+from .models import NoticeBoard, Tag
 
 
 class NoticeBoardView(generics.ListCreateAPIView):
@@ -25,3 +25,8 @@ class NoticeBoardDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = NoticeBoard.objects.all()
     serializer_class = NoticeBoardSerializer
     permission_classes = [IsAuthenticated]
+
+
+class TagView(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
