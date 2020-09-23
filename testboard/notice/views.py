@@ -8,12 +8,8 @@ from rest_framework.permissions import (
     IsAdminUser,
 )
 from django_filters import rest_framework as filters
-from .serializer import (
-    NoticeBoardSerializer,
-    TagSerializer,
-    TagListRelatedBoardSerializer,
-)
-from .models import NoticeBoard, Tag, TagListRelatedBoard
+from .serializer import NoticeBoardSerializer, TagSerializer
+from .models import NoticeBoard, Tag
 
 
 class NoticeBoardView(generics.ListCreateAPIView):
@@ -34,8 +30,3 @@ class NoticeBoardDetailView(generics.RetrieveUpdateDestroyAPIView):
 class TagView(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-
-
-class TagListRelatedBoardView(generics.ListCreateAPIView):
-    queryset = TagListRelatedBoard.objects.all()
-    serializer_class = TagListRelatedBoardSerializer

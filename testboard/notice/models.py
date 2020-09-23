@@ -9,7 +9,7 @@ class Tag(models.Model):
     tagname = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.tagname
+        return "#" + self.tagname
 
 
 class NoticeBoard(TimeStampedModel, StatusModel):
@@ -18,17 +18,9 @@ class NoticeBoard(TimeStampedModel, StatusModel):
     title = models.CharField(max_length=50)
     contents = models.TextField()
     owner = models.ForeignKey(
-        'auth.User', related_name='snippets', on_delete=models.CASCADE
+        'auth.User', related_name='notice', on_delete=models.CASCADE
     )
-    tag = models.ManyToManyField(Tag, through="TagListRelatedBoard")
+    tag = models.ManyToManyField(Tag, related_name='board')
 
     def __str__(self):
         return self.title
-
-
-class TagListRelatedBoard(TimeStampedModel):
-    notice = models.ForeignKey(NoticeBoard, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = [['notice', 'tag']]

@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vh__^&j8pomf8*864^$90ha2wz)j@9+bbh8*=y5bb%x*^mmiu4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'notice',
     'rest_framework',
     'django_filters',
-    'rest_framework.authtoken',
 ]
 
 REST_FRAMEWORK = {
