@@ -1,13 +1,8 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
 from model_utils.models import TimeStampedModel, StatusModel
 from model_utils import Choices
-
-
-class User(models.Model):
-    username = models.CharField(max_length=30)
-
-    def __str__(self):
-        return '%s' % (self.username)
 
 
 class Board(TimeStampedModel, StatusModel):
@@ -15,7 +10,7 @@ class Board(TimeStampedModel, StatusModel):
 
     title = models.CharField(max_length=50)
     contents = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
 
 class History(TimeStampedModel):
@@ -25,4 +20,4 @@ class History(TimeStampedModel):
         on_delete=models.CASCADE,
         null=False,
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
