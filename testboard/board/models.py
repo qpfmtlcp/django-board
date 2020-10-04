@@ -11,7 +11,7 @@ class Board(TimeStampedModel, StatusModel):
     title = models.CharField(max_length=50)
     contents = models.TextField()
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    
+    image = models.ImageField(null=True, blank=True, upload_to='image/')
 
 
 

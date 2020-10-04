@@ -23,6 +23,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'contents',
+            'image'
         ]
 
     def create(self, validated_data):
@@ -33,7 +34,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
 
         if contents is None:
             raise serializers.ValidationError('contents is not exist.')
-        user = get_user_model().objects.get(username="siransfe")
+        user = self.context['request'].user
         return Board.objects.create(owner=user, **validated_data)
 
 

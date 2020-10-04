@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework import permissions
 
 from django_filters import rest_framework as filters
 
@@ -29,6 +30,7 @@ class UserFilter(filters.FilterSet):
 class BoardView(generics.ListCreateAPIView):
     queryset = Board.objects.all()
     serializer_class = BoardCreateSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filterset_class = BoardFilter
 
 
