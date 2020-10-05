@@ -27,11 +27,9 @@ class BoardView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filterset_class = BoardFilter
 
-
 class BoardDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
-
 
 class HistoryView(generics.ListAPIView):
     queryset = History.objects.all()

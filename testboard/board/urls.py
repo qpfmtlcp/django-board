@@ -7,5 +7,5 @@ urlpatterns = [
     path('board/<int:pk>/', views.BoardDetailView.as_view()),
     path('history/', views.HistoryView.as_view()),
     path('tag/', views.TagView.as_view()),
-    path('tag/<str:slug>/', views.TagDetailView.as_view())
+    path('tag/<str:tagname>/', views.TagDetailView.as_view())
 ]

@@ -7,7 +7,7 @@ from .models import Board, History, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
-    tagname = serializers.StringRelatedField()
+    tagname = serializers.DictField()
     #board = BoardSerializer(many=True, read_only=True)
     
     class Meta:
@@ -15,8 +15,7 @@ class TagSerializer(serializers.ModelSerializer):
         fields = '__all__' 
                 
 class TagRetriveSerializer(serializers.ModelSerializer):
-    tagname = serializers.StringRelatedField()
-    #slug = serializers.SlugField(max_length=50, min_length=None, allow_blank=False)
+    tagname = serializers.CharField(max_length=50, required=True)
     board = Board.objects.filter(tag = Tag.objects.filter(tagname = tagname))
     
     class Meta:
@@ -47,19 +46,29 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        #obj = super().create(validated_data)
+        #print(obj)
         title = validated_data.get("title")
         contents = validated_data.get("contents")
+        #tag = validated_data.get("tag") 
+        #tagobj = Tag.objects.create(tagname ="sirassss")
+        #print(self)
+        #print(validated_data)
+
+        
+
         if title is None:
             raise serializers.ValidationError('title is not exist.')
         
-        if Board.objects.filter(title=title):
-            raise serializers.ValidationError('title is already exist. put another title name')
+        #if Board.objects.filter(title=title):
+        #    raise serializers.ValidationError('title is already exist. put another title name')
     
         if contents is None:
             raise serializers.ValidationError('contents is not exist.')
         
         user = self.context['request'].user
         return Board.objects.create(owner=user, **validated_data)
+        #return obj
 
 
 class BoardSerializer(serializers.ModelSerializer):
@@ -89,6 +98,7 @@ class BoardSerializer(serializers.ModelSerializer):
             )
         else:
             raise serializers.ValidationError("user is not valid")
+        
         instance.status = validated_data.get('status', instance.status)
         instance.title = validated_data.get('title', instance.title)
         instance.contents = validated_data.get('contents', instance.contents)

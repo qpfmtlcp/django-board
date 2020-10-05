@@ -23,6 +23,8 @@ class NoticeBoardSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'contents', 'created', 'tag']
 
     def create(self, validated_data):
+        obj = super().create(validated_data)
+        print(obj)
         tag = Tag.objects.create(tagname="siran")
         notice = NoticeBoard.objects.create(**validated_data)
         notice.tag.add(tag)

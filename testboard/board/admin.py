@@ -10,7 +10,7 @@ class HistoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'created')
     
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('id', 'tagname','slug')
+    list_display = ('id', 'tagname')
 
 admin.site.register(Board, BoardAdmin)
 admin.site.register(History, HistoryAdmin)
