@@ -23,6 +23,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'contents',
+            'image'
         ]
 
     def create(self, validated_data):
@@ -30,10 +31,14 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         contents = validated_data.get("contents")
         if title is None:
             raise serializers.ValidationError('title is not exist.')
-
+        
+        if Board.objects.filter(title=title):
+            raise serializers.ValidationError('title is already exist. put another title name')
+    
         if contents is None:
             raise serializers.ValidationError('contents is not exist.')
-        user = get_user_model().objects.get(username="siransfe")
+        
+        user = self.context['request'].user
         return Board.objects.create(owner=user, **validated_data)
 
 
