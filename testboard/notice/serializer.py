@@ -7,7 +7,6 @@ from .models import NoticeBoard, Tag
 
 class TagSerializer(serializers.ModelSerializer):
     tagname = serializers.StringRelatedField()
-    serializers.ImageField
 
     class Meta:
         model = Tag

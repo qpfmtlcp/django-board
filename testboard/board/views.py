@@ -7,8 +7,10 @@ from .serializer import (
     BoardSerializer,
     BoardCreateSerializer,
     HistorySerializer,
+    TagSerializer,
+    TagRetriveSerializer,
 )
-from .models import Board, History
+from .models import Board, History, Tag
 
 
 class BoardFilter(filters.FilterSet):
@@ -18,14 +20,6 @@ class BoardFilter(filters.FilterSet):
             'status',
             'owner',
         ]
-
-
-'''
-class UserFilter(filters.FilterSet):
-    class Meta:
-        model = User
-        fields = ['username']'''
-
 
 class BoardView(generics.ListCreateAPIView):
     queryset = Board.objects.all()
@@ -42,3 +36,11 @@ class BoardDetailView(generics.RetrieveUpdateDestroyAPIView):
 class HistoryView(generics.ListAPIView):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
+    
+class TagView(generics.RetrieveAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+class TagDetailView(generics.RetrieveAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagRetriveSerializer

@@ -2,9 +2,25 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 from rest_framework import serializers
-from .models import Board, History
+from .models import Board, History, Tag
 
 
+
+class TagSerializer(serializers.ModelSerializer):
+    tagname = serializers.StringRelatedField()
+    #board = BoardSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Tag
+        field = ['tagname', ]
+                
+class TagRetriveSerializer(serializers.ModelSerializer):
+    tagname = serializers.StringRelatedField()
+    
+    class Meta:
+        model = Tag
+        field = ['tagname']
+            
 class HistorySerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
 
@@ -16,14 +32,16 @@ class HistorySerializer(serializers.ModelSerializer):
 class BoardCreateSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=50, required=False)
     contents = serializers.CharField(max_length=50, required=False)
-
+    tag = TagSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Board
         fields = [
             'id',
             'title',
             'contents',
-            'image'
+            'image',
+            'tag',
         ]
 
     def create(self, validated_data):
@@ -48,7 +66,8 @@ class BoardSerializer(serializers.ModelSerializer):
     contents = serializers.CharField(max_length=50, required=False)
     STATUS = ('draft', 'published')
     status = serializers.ChoiceField(STATUS)
-
+    tag = TagSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Board
         fields = [
@@ -58,6 +77,7 @@ class BoardSerializer(serializers.ModelSerializer):
             'created',
             'modified',
             'history',
+            'tag'
         ]
 
     def update(self, instance, validated_data):
