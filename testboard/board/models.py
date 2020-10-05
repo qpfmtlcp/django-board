@@ -22,7 +22,6 @@ class Board(TimeStampedModel, StatusModel):
     tag     = models.ManyToManyField(Tag, related_name='board')
 
 
-
 class History(TimeStampedModel):
     board   = models.ForeignKey(
         Board,

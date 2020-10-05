@@ -12,14 +12,16 @@ class TagSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Tag
-        field = ['tagname', ]
+        fields = '__all__' 
                 
 class TagRetriveSerializer(serializers.ModelSerializer):
     tagname = serializers.StringRelatedField()
+    #slug = serializers.SlugField(max_length=50, min_length=None, allow_blank=False)
+    board = Board.objects.filter(tag = Tag.objects.filter(tagname = tagname))
     
     class Meta:
         model = Tag
-        field = ['tagname']
+        fields = ['tagname','board']
             
 class HistorySerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()

@@ -37,10 +37,10 @@ class HistoryView(generics.ListAPIView):
     queryset = History.objects.all()
     serializer_class = HistorySerializer
     
-class TagView(generics.RetrieveAPIView):
+class TagView(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
-class TagDetailView(generics.RetrieveAPIView):
+class TagDetailView(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagRetriveSerializer
