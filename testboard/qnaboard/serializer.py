@@ -21,7 +21,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     
     class meta:
         model = AnswerBoard
-        fields = ['id','content','score']
+        fields = ['id','score']
 
 class AnswerDetailSerializer(serializers.ModelSerializer):
     
