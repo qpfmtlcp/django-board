@@ -10,23 +10,23 @@ class TagSerializer(serializers.ModelSerializer):
     tagname = serializers.StringRelatedField()
     
     class Meta:
-        model = Tag
-        fields = ['pk', 'tagname']
+        model   = Tag
+        fields  = ['pk', 'tagname']
                 
 class TagRetriveSerializer(serializers.ModelSerializer):
     tagname = serializers.CharField(max_length=50, required=True)
     board = Board.objects.filter(tag = Tag.objects.filter(tagname = tagname))
     
     class Meta:
-        model = Tag
-        fields = ['tagname','board']
+        model   = Tag
+        fields  = ['tagname','board']
             
 class HistorySerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
 
     class Meta:
-        model = History
-        fields = ['user', 'created']
+        model   = History
+        fields  = ['user', 'created']
         
 class BoardCreateSerializer(serializers.ModelSerializer):
     title       = serializers.CharField(max_length=50, required=False)
@@ -38,8 +38,8 @@ class BoardCreateSerializer(serializers.ModelSerializer):
     )    
     
     class Meta:
-        model = Board
-        fields = [
+        model   = Board
+        fields  = [
             'id',
             'title',
             'contents',
@@ -49,8 +49,8 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        title = validated_data.get("title")
-        contents = validated_data.get("contents")
+        title   = validated_data.get("title")
+        contents= validated_data.get("contents")
         tagname = validated_data.get("tagname")
 
         #tag = Tag.objects.create(tagname ="dlghdco" )
@@ -66,22 +66,22 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         
         user = self.context['request'].user
         board= Board.objects.create(owner=user, **validated_data)
-        #board.tag.add(tag)
+        board.tag.add(tag)
         return board
         
 
 
 class BoardSerializer(serializers.ModelSerializer):
     history = HistorySerializer(many=True, read_only=True)
-    title = serializers.CharField(max_length=50, required=False)
-    contents = serializers.CharField(max_length=50, required=False)
-    STATUS = ('draft', 'published')
-    status = serializers.ChoiceField(STATUS)
-    tag = TagSerializer(many=True, read_only=True)
+    title   = serializers.CharField(max_length=50, required=False)
+    contents= serializers.CharField(max_length=50, required=False)
+    STATUS  = ('draft', 'published')
+    status  = serializers.ChoiceField(STATUS)
+    tag     = TagSerializer(many=True, read_only=True)
     
     class Meta:
-        model = Board
-        fields = [
+        model   = Board
+        fields  = [
             'title',
             'status',
             'contents',
@@ -100,7 +100,7 @@ class BoardSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("user is not valid")
         
         instance.status = validated_data.get('status', instance.status)
-        instance.title = validated_data.get('title', instance.title)
+        instance.title  = validated_data.get('title', instance.title)
         instance.contents = validated_data.get('contents', instance.contents)
         instance.save()
         return instance
