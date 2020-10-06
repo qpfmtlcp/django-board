@@ -8,7 +8,6 @@ from .models import Board, History, Tag
 
 class TagSerializer(serializers.ModelSerializer):
     tagname = serializers.StringRelatedField()
-    #board = BoardSerializer(many=True, read_only=True)
     
     class Meta:
         model = Tag
@@ -28,34 +27,33 @@ class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = History
         fields = ['user', 'created']
-
-
+        
 class BoardCreateSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(max_length=50, required=False)
-    contents = serializers.CharField(max_length=50, required=False)
-    tag = TagSerializer(many=True, read_only=True)
-    
+    title       = serializers.CharField(max_length=50, required=False)
+    contents    = serializers.CharField(max_length=50, required=False)
+    tag         = TagSerializer(many=True, read_only=True)
+    tagname     = serializers.ListField(
+        child   = serializers.CharField(max_length=50, required=False),
+        allow_empty=True
+    )    
     
     class Meta:
         model = Board
-        tagname = serializers.CharField(max_length=50, required=False)
         fields = [
             'id',
             'title',
             'contents',
             'image',
             'tag',
+            'tagname'
         ]
 
     def create(self, validated_data):
-        #obj = super().create(validated_data)
-        #print(obj)
         title = validated_data.get("title")
         contents = validated_data.get("contents")
         tagname = validated_data.get("tagname")
-        print(tagname)
-        if tagname:
-            tag = Tag.objects.create(tagname =tagname )
+
+        #tag = Tag.objects.create(tagname ="dlghdco" )
 
         if title is None:
             raise serializers.ValidationError('title is not exist.')
@@ -68,8 +66,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         
         user = self.context['request'].user
         board= Board.objects.create(owner=user, **validated_data)
-        if tagname:
-            board.tag.add(tag)
+        #board.tag.add(tag)
         return board
         
 
