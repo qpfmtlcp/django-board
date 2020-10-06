@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('board.urls')),
     path('admin/', admin.site.urls),
     path('notice/', include('notice.urls')),
+    path('qna/', include('qnaboard.urls')),
     path('api-auth/', include('rest_framework.urls')),
 ]
 

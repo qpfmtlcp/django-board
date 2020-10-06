@@ -99,8 +99,8 @@ class BoardSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError("user is not valid")
         
-        instance.status = validated_data.get('status', instance.status)
-        instance.title  = validated_data.get('title', instance.title)
-        instance.contents = validated_data.get('contents', instance.contents)
+        instance.status     = validated_data.get('status', instance.status)
+        instance.title      = validated_data.get('title', instance.title)
+        instance.contents   = validated_data.get('contents', instance.contents)
         instance.save()
         return instance

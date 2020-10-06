@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'board',
     'notice',
+    'qnaboard',
     'rest_framework',
     'django_filters',
+    
 ]
 
 REST_FRAMEWORK = {
