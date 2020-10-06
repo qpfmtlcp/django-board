@@ -34,7 +34,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
     tag         = TagSerializer(many=True, read_only=True)
     tagname     = serializers.ListField(
         child   = serializers.CharField(max_length=50, required=False),
-        allow_empty=True
+        allow_empty=True, required=False,  write_only=True,
     )    
     
     class Meta:
@@ -51,10 +51,8 @@ class BoardCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         title = validated_data.get("title")
         contents = validated_data.get("contents")
-        tagname = validated_data.get("tagname")
-
-        #tag = Tag.objects.create(tagname ="dlghdco" )
-
+        tagnames = validated_data.pop("tagname")
+        
         if title is None:
             raise serializers.ValidationError('title is not exist.')
         
@@ -66,7 +64,10 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         
         user = self.context['request'].user
         board= Board.objects.create(owner=user, **validated_data)
-        #board.tag.add(tag)
+     
+        for tagname in tagnames:
+            tag = Tag.objects.create(tagname = tagname )
+            board.tag.add(tag)
         return board
         
 
