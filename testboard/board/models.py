@@ -6,8 +6,7 @@ from model_utils import Choices
 
 
 class Tag(models.Model):
-    tagname = models.SlugField(max_length=100, unique=True)
-    #slug    = models.SlugField(unique =True)
+    tagname = models.CharField(max_length=100)
     
     def __str__(self):
         return "#" + self.tagname

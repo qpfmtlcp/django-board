@@ -7,12 +7,12 @@ from .models import Board, History, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
-    tagname = serializers.DictField()
+    tagname = serializers.StringRelatedField()
     #board = BoardSerializer(many=True, read_only=True)
     
     class Meta:
         model = Tag
-        fields = '__all__' 
+        fields = ['pk', 'tagname']
                 
 class TagRetriveSerializer(serializers.ModelSerializer):
     tagname = serializers.CharField(max_length=50, required=True)
@@ -35,8 +35,10 @@ class BoardCreateSerializer(serializers.ModelSerializer):
     contents = serializers.CharField(max_length=50, required=False)
     tag = TagSerializer(many=True, read_only=True)
     
+    
     class Meta:
         model = Board
+        tagname = serializers.CharField(max_length=50, required=False)
         fields = [
             'id',
             'title',
@@ -50,12 +52,10 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         #print(obj)
         title = validated_data.get("title")
         contents = validated_data.get("contents")
-        #tag = validated_data.get("tag") 
-        #tagobj = Tag.objects.create(tagname ="sirassss")
-        #print(self)
-        #print(validated_data)
-
-        
+        tagname = validated_data.get("tagname")
+        print(tagname)
+        if tagname:
+            tag = Tag.objects.create(tagname =tagname )
 
         if title is None:
             raise serializers.ValidationError('title is not exist.')
@@ -67,8 +67,11 @@ class BoardCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('contents is not exist.')
         
         user = self.context['request'].user
-        return Board.objects.create(owner=user, **validated_data)
-        #return obj
+        board= Board.objects.create(owner=user, **validated_data)
+        if tagname:
+            board.tag.add(tag)
+        return board
+        
 
 
 class BoardSerializer(serializers.ModelSerializer):
