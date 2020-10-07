@@ -66,12 +66,10 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         
         user = self.context['request'].user
         board= Board.objects.create(owner=user, **validated_data)
-     
         for tagname in tagnames:
-            tag = Tag.objects.create(tagname = tagname )
-            board.tag.add(tag)
+            tags, _ = Tag.objects.get_or_create(tagname = tagname )
+            board.tag.add(tags)
         return board
-        
 
 class BoardSerializer(serializers.ModelSerializer):
     history = HistorySerializer(many=True, read_only=True)
