@@ -7,26 +7,18 @@ from model_utils import Choices
 
 class Tag(models.Model):
     tagname = models.CharField(max_length=100)
-    
     def __str__(self):
         return "#" + self.tagname
     
 class Board(TimeStampedModel, StatusModel):
     STATUS  = Choices('draft', 'published')
 
-<<<<<<< HEAD
+
     title   = models.CharField(max_length=50)
     contents= models.TextField()
     owner   = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     image   = models.ImageField(null=True, blank=True, upload_to='image/')
     tag     = models.ManyToManyField(Tag, related_name='board')
-=======
-    title = models.CharField(max_length=50)
-    contents = models.TextField()
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, upload_to='image/')
-
->>>>>>> master
 
 
 class History(TimeStampedModel):
