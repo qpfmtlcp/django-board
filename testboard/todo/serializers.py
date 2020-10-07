@@ -3,24 +3,27 @@ from rest_framework import serializers
 from .models import Todo, Label
 
 
+class LabelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Label
+        fields = ('name',)
+
+
 class TodoSerializer(serializers.ModelSerializer):
-    label = serializers.StringRelatedField(many=True, read_only=True)
-    label_input = serializers.ListField(
-        child=serializers.CharField(),
-        allow_empty=True, required=False,  write_only=True,
-    )
+    label = LabelSerializer(many=True)
 
     class Meta:
         model = Todo
-        fields = ('task', 'label', 'label_input')
+        fields = ('task', 'label')
 
     def create(self, validated_data):
-        label_inputs = validated_data.pop('label_input', [])
+        labels = validated_data.pop('label', [])
 
         obj = super().create(validated_data)
 
-        for label_input in label_inputs:
-            label, _ = Label.objects.get_or_create(name=label_input)
+        for label in labels:
+            label_name = label.get('name')
+            label, _ = Label.objects.get_or_create(name=label_name)
             obj.label.add(label)
 
         return obj
