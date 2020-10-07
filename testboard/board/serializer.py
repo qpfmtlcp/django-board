@@ -43,9 +43,13 @@ class BoardCreateSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'contents',
+<<<<<<< HEAD
             'image',
             'tag',
             'tagname'
+=======
+            'image'
+>>>>>>> master
         ]
 
     def create(self, validated_data):
@@ -56,13 +60,19 @@ class BoardCreateSerializer(serializers.ModelSerializer):
         if title is None:
             raise serializers.ValidationError('title is not exist.')
         
+<<<<<<< HEAD
         #if Board.objects.filter(title=title):
         #    raise serializers.ValidationError('title is already exist. put another title name')
+=======
+        if Board.objects.filter(title=title):
+            raise serializers.ValidationError('title is already exist. put another title name')
+>>>>>>> master
     
         if contents is None:
             raise serializers.ValidationError('contents is not exist.')
         
         user = self.context['request'].user
+<<<<<<< HEAD
         board= Board.objects.create(owner=user, **validated_data)
      
         for tagname in tagnames:
@@ -70,6 +80,9 @@ class BoardCreateSerializer(serializers.ModelSerializer):
             board.tag.add(tag)
         return board
         
+=======
+        return Board.objects.create(owner=user, **validated_data)
+>>>>>>> master
 
 
 class BoardSerializer(serializers.ModelSerializer):
