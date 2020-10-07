@@ -61,12 +61,17 @@ class BoardCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('title is not exist.')
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         #if Board.objects.filter(title=title):
         #    raise serializers.ValidationError('title is already exist. put another title name')
 =======
         if Board.objects.filter(title=title):
             raise serializers.ValidationError('title is already exist. put another title name')
 >>>>>>> master
+=======
+        if Board.objects.filter(title=title):
+            raise serializers.ValidationError('title is already exist. put another title name')
+>>>>>>> 3a290e5... Put title check options in create method
     
         if contents is None:
             raise serializers.ValidationError('contents is not exist.')
